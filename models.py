@@ -2,9 +2,10 @@ from enum import Enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Enum as SQLEnum, JSON
 from sqlalchemy.orm import relationship
-from extensions import db
+from extensions import Config, db
 from datetime import datetime
 
+#db = SQLAlchemy()
 class Perspective(db.Model):
     __tablename__ = 'perspectives'
     
@@ -97,7 +98,7 @@ class Indicator(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     
     # Relaciones con tablas de configuración
-    perspective_id = db.Column(db.Integer, db.ForeignKey('perspectives.id'), nullable=False)
+    perspective_id = db.Column(db.Integer, db.ForeignKey('perspectives.id'))
     perspective = db.relationship('Perspective', back_populates='indicators')
     
     comparison_type_id = db.Column(db.Integer, db.ForeignKey('comparison_types.id'), nullable=False)

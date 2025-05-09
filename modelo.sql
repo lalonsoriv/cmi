@@ -70,7 +70,7 @@ CREATE TABLE indicators (
     id SERIAL PRIMARY KEY,
     codigo VARCHAR(30) UNIQUE NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    perspective_id INTEGER NOT NULL REFERENCES perspectives(id),
+    perspective_id INTEGER NOT NULL REFERENCES perspectives(id) ON DELETE CASCADE,
     unidad_medida VARCHAR(20) NOT NULL,
     periodicity_id INTEGER NOT NULL REFERENCES periodicities(id),
     valor_real FLOAT,

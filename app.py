@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from forms import KPIForm
+from extensions import Config
 from models import db, Indicator, Perspective, AggregationMethod, ComparisonType, Periodicity, OrganizationalStructure
 import os
 from dotenv import load_dotenv
@@ -9,30 +10,27 @@ from sqlalchemy.exc import SQLAlchemyError
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:8673.l@localhost:5432/modelo')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-#db = SQLAlchemy(app)
+app.config.from_object(Config)
 db.init_app(app)
 
 # Funciones auxiliares para obtener opciones de la BD
 def get_perspective_choices():
-    return [(p.id, p.name) for p in Perspective.query.order_by(Perspective.name).all()]
+    return [(p.id, p.nombre) for p in Perspective.query.order_by(Perspective.nombre).all()]
 
 def get_aggregation_method_choices():
-    return [(m.id, m.name) for m in AggregationMethod.query.order_by(AggregationMethod.name).all()]
+    return [(m.id, m.nombre) for m in AggregationMethod.query.order_by(AggregationMethod.nombre).all()]
 
 def get_comparison_type_choices():
-    return [(t.id, t.name) for t in ComparisonType.query.order_by(ComparisonType.name).all()]
+    return [(t.id, t.nombre) for t in ComparisonType.query.order_by(ComparisonType.nombre).all()]
 
 def get_periodicity_choices():
-    return [(p.id, p.name) for p in Periodicity.query.order_by(Periodicity.name).all()]
+    return [(p.id, p.nombre) for p in Periodicity.query.order_by(Periodicity.nombre).all()]
 
 def get_organizational_structure_choices():
-    return [(o.id, o.name) for o in OrganizationalStructure.query.order_by(OrganizationalStructure.name).all()]
+    return [(o.id, o.nombre) for o in OrganizationalStructure.query.order_by(OrganizationalStructure.nombre).all()]
 
 def get_parent_kpi_choices():
-    return [(k.id, k.name) for k in Indicator.query.order_by(Indicator.name).all()]
+    return [(k.id, k.nombre) for k in Indicator.query.order_by(Indicator.nombre).all()]
 
 @app.route('/')
 def index():
@@ -46,7 +44,7 @@ def list_kpis():
 @app.route('/kpi/create', methods=['GET', 'POST'])
 def create_kpi():
     form = KPIForm()
-    
+
     # Poblar todos los campos select
     form.perspective.choices = [('', '-- Seleccione Perspectiva --')] + get_perspective_choices()
     form.aggregation_method.choices = [('', '-- Seleccione Método --')] + get_aggregation_method_choices()
@@ -58,8 +56,7 @@ def create_kpi():
     if form.validate_on_submit():
         try:
             kpi = Indicator(
-                name=form.name.data,
-                description=form.description.data,
+                name=form.nombre.data,
                 perspective_id=form.perspective.data,
                 aggregation_method_id=form.aggregation_method.data,
                 comparison_type_id=form.comparison_type.data,
