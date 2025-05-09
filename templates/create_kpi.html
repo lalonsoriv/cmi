@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Crear Nuevo KPI</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {{ form.nombre.label(class="form-label") }}
+            {{ form.nombre(class="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.perspective.label(class="form-label") }}
+            {{ form.perspective(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            {{ form.unidad_medida.label(class="form-label") }}
+            {{ form.unidad_medida(class="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.periodicity.label(class="form-label") }}
+            {{ form.periodicity(class="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.valor_real.label(class="form-label") }}
+            {{ form.valor_real(class="form-control") }}
+        </div>
+    </div>
+
+    <h4 class="mt-4">Referencias</h4>
+    <div class="row mb-3">
+        {% for ref in [form.referencia1, form.referencia2, form.referencia3, form.referencia4] %}
+        <div class="col-md-3">
+            {{ ref.label(class="form-label") }}
+            {{ ref(class="form-control") }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {{ form.comparison_type.label(class="form-label") }}
+            {{ form.comparison_type(class="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.aggregation_method.label(class="form-label") }}
+            {{ form.aggregation_method(class="form-control") }}
+        </div>
+    </div>
+
+    <h4 class="mt-4">Dimensiones</h4>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {{ form.estructura_jerarquica_id.label(class="form-label") }}
+            {{ form.estructura_jerarquica_id(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form.centro_costo.label(class="form-label") }}
+        {{ form.centro_costo(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Guardar KPI</button>
+        <a href="{{ url_for('list_kpis') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
