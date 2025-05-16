@@ -8,21 +8,26 @@ class KPIForm(FlaskForm):
     nombre = StringField('Nombre del KPI', validators=[DataRequired()])
     
     perspective = SelectField('Perspectiva', coerce=lambda x: int(x) if x and x != '' else None,
-                                             validators=[validators.InputRequired()]  
+                                             validators=[validators.InputRequired()],  
+                                             
                             )
     periodicity = SelectField('Periodicidad', coerce=lambda x: int(x) if x and x != '' else None,
-                                             validators=[validators.InputRequired()]  
+                                             validators=[validators.InputRequired()],  
+                                             
                             )
     comparison_type = SelectField('Tipo de Comparación', coerce=lambda x: int(x) if x and x != '' else None,
-                                             validators=[validators.InputRequired()]  
+                                             validators=[validators.InputRequired()],  
+                                             
                             )
     aggregation_method = SelectField('Método de Agregación', coerce=lambda x: int(x) if x and x != '' else None,
-                                             validators=[validators.InputRequired()]  
+                                             validators=[validators.InputRequired()],
+                                             
                             )
     unidad_medida = StringField('Unidad de Medida', validators=[DataRequired()])
     valor_real = FloatField('Valor Actual', validators=[Optional()])
     organizational_structure_id = SelectField('Organizaciones', coerce=lambda x: int(x) if x and x != '' else None,
-                                             validators=[validators.InputRequired()]  
+                                             validators=[validators.InputRequired()],  
+                                             
                             )
 
     # Referencias (simplificado para el ejemplo)

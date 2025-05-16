@@ -46,7 +46,7 @@ def create_kpi():
     form = KPIForm()
 
     # Poblar todos los campos select
-    form.perspective.choices = [('', '-- Seleccione Perspectiva --')] + get_perspective_choices()
+    form.perspective.choices = [('', '-- Seleccione Perspectiva --')] + [(p.id, p.nombre) for p in Perspective.query.order_by(Perspective.nombre).all()]
     form.aggregation_method.choices = [('', '-- Seleccione Método --')] + get_aggregation_method_choices()
     form.comparison_type.choices = [('', '-- Seleccione Tipo --')] + get_comparison_type_choices()
     form.periodicity.choices = [('', '-- Seleccione Periodicidad --')] + get_periodicity_choices()

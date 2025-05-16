@@ -1,7 +1,9 @@
 from enum import Enum
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Enum as SQLEnum, JSON
+from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, Enum as SQLEnum, JSON
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from extensions import Config, db
 from datetime import datetime
 
@@ -80,7 +82,7 @@ class EquipoFisico(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     codigo_activo = db.Column(db.String(30), unique=True, nullable=False)
     nombre = db.Column(db.String(50), nullable=False)
-    coordenadas = db.Column(db.String(50))  # Podrías usar PostGIS en producción
+    coordenadas = db.Column(db.String(50))
     estructura_id = db.Column(db.Integer, db.ForeignKey('organizational_structures.id'), nullable=False)
     fecha_adquisicion = db.Column(db.Date)
     estado = db.Column(db.String(20))

@@ -58,7 +58,7 @@ CREATE TABLE equipos_fisicos (
     id SERIAL PRIMARY KEY,
     codigo_activo VARCHAR(30) UNIQUE NOT NULL,
     nombre VARCHAR(50) NOT NULL,
-    coordenadas GEOGRAPHY(POINT, 4326),
+    --coordenadas GEOGRAPHY(POINT, 4326),
     estructura_id INTEGER NOT NULL REFERENCES organizational_structures(id),
     fecha_adquisicion DATE,
     estado VARCHAR(20) CHECK (estado IN ('OPERATIVO', 'MANTENIMIENTO', 'BAJA')),
